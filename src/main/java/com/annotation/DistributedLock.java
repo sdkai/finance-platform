@@ -1,5 +1,7 @@
 package com.annotation;
 
+import com.config.RlockEnum;
+
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
 import java.lang.annotation.RetentionPolicy;
@@ -10,13 +12,18 @@ import java.lang.annotation.Target;
 public @interface DistributedLock {
 
     /**
-     * 锁类型
+     * 锁类型，默认重入锁
      */
-    String lockType = "reentrant";
+    RlockEnum lockType() default RlockEnum.REENTRANT_LOCK;
 
     /**
-     * 锁持续时间
+     * 锁持续时间，毫秒
      */
-    Long   leaseTime = 30000L;
+    int leaseTime() default  -1;
+
+    /**
+     * 等待获取锁的时间
+     */
+    int waitTime() default  30000;
 
 }
